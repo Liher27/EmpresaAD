@@ -7,8 +7,8 @@ public class ExerciseAlmacenado3 {
 
 	public static void main(String[] args) {
 
-		Exercise3Logic db = new Exercise3Logic();
 		try {
+			Exercise3Logic db = new Exercise3Logic();
 			Employee employee = db.selectEmployeeAlmacenado();
 			System.out.println("APELLIDO: " + employee.getApellido());
 			System.out.println("DEPARTAMENTO: " + employee.getDnombre());
@@ -16,8 +16,7 @@ public class ExerciseAlmacenado3 {
 		} catch (Exception e) {
 			System.out.println("ha habido un error leyendo los datos.");
 		}
-		
-		
+
 	}
 
 }

@@ -9,9 +9,8 @@ public class ExerciseAlmacenado1 {
 
 	public static void main(String[] args) {
 
-		Exercise1Logic db = new Exercise1Logic();
 		try {
-
+			Exercise1Logic db = new Exercise1Logic();
 			List<Department> departments = db.selectDepartmentsAlmacenado();
 
 			for (Department department : departments) {
@@ -22,6 +21,7 @@ public class ExerciseAlmacenado1 {
 			}
 		} catch (Exception e) {
 			System.out.println("ha habido un error leyendo los datos.");
+			e.printStackTrace();
 		}
 	}
 
