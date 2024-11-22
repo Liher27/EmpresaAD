@@ -40,18 +40,21 @@ public class Exercise3Logic extends AbstractManager {
 
 	public Employee selectEmployeeAlmacenado() throws SQLException {
 		Employee employee = new Employee();
+
 		// Este procedimiento almacenado esta creado en la base de datos, y llama a
 		// getBestEmployee(), el cual hace la misma query que el anterior metodo
 		String sql = "{call getBestEmployee()}";
 
-		CallableStatement stmt = conn.prepareCall(sql);
-		try (ResultSet result = stmt.executeQuery()) {
-			if (result.next()) {
-				employee.setApellido(result.getString("apellido"));
-				employee.setOficio(result.getString("oficio"));
-				employee.setSalario(result.getInt("salario"));
-			}
+		CallableStatement cstmt = conn.prepareCall(sql);
+		ResultSet result = cstmt.executeQuery();
+
+		if (result.next()) {
+			employee.setApellido(result.getString("apellido"));
+			employee.setOficio(result.getString("oficio"));
+			employee.setSalario(result.getInt("salario"));
 		}
+
+		release(conn, cstmt, result);
 		return employee;
 	}
 }

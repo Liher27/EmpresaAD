@@ -52,16 +52,19 @@ public class Exercise1Logic extends AbstractManager {
 		// Este procedimiento almacenado esta creado en la base de datos, y llama a
 		// get_departments(), el cual hace la misma query que el anterior metodo
 		String sql = "{call get_departments()}";
+		
 		CallableStatement stmt = conn.prepareCall(sql);
-		try (ResultSet rs = stmt.executeQuery()) {
-			while (rs.next()) {
-				Department department = new Department();
-				department.setDnombre(rs.getString("dnombre")); // Asegúrate de que los nombres de columna coincidan
-				department.setLoc(rs.getString("loc"));
-				department.setDept_no(rs.getInt("dept_no"));
-				departments.add(department);
-			}
+		ResultSet result = stmt.executeQuery();
+		
+		while (result.next()) {
+			Department department = new Department();
+			department.setDnombre(result.getString("dnombre"));
+			department.setLoc(result.getString("loc"));
+			department.setDept_no(result.getInt("dept_no"));
+			departments.add(department);
 		}
+		
+		release(conn, stmt, result);
 		return departments;
 	}
 

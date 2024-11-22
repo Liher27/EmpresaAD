@@ -52,20 +52,22 @@ public class Exercise2Logic extends AbstractManager {
 		// Este procedimiento almacenado esta creado en la base de datos, y llama a
 		// getDep10Employees(), el cual hace la misma query que el anterior metodo
 		String sql = "{call getDep10Employees()}";
-		CallableStatement stmt = conn.prepareCall(sql);
 
-		try (ResultSet result = stmt.executeQuery()) {
-			while (result.next()) {
-				Employee employee = new Employee();
+		CallableStatement cstmt = conn.prepareCall(sql);
+		ResultSet result = cstmt.executeQuery();
 
-				employee.setApellido(result.getString("apellido"));
-				employee.setOficio(result.getString("oficio"));
-				employee.setSalario(result.getInt("salario"));
+		while (result.next()) {
+			Employee employee = new Employee();
 
-				employees.add(employee);
-			}
+			employee.setApellido(result.getString("apellido"));
+			employee.setOficio(result.getString("oficio"));
+			employee.setSalario(result.getInt("salario"));
+
+			employees.add(employee);
+
 		}
 
+		release(conn, cstmt, result);
 		return employees;
 	}
 }
